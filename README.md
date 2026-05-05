@@ -40,7 +40,7 @@ A premium e-commerce storefront for **Delicate by Viky**, a specialized pastry b
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/delicateuy.git
+   git clone https://github.com/nahueldlsl/delicateuy.git
    ```
 
 2. Navigate to the app directory:
@@ -83,4 +83,4 @@ This project is private and intended only for **Delicate by Viky**.
 
 ---
 
-Developed with ❤️ by [Antigravity](https://github.com/google-deepmind).
+Developed with ❤️ by Nahuel De Los Santos.
