@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Admin · delicate by Viky</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream-50); }
+  .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  /* SIDEBAR */
+  aside.side { background: var(--choc-900); color: var(--cream-200); padding: 22px 16px; position: sticky; top: 0; height: 100vh; }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 22px; }
+  .brand img { width: 38px; height: 38px; }
+  .brand .word { font-family: var(--font-script); font-size: 24px; line-height: 1; color: #fff; }
+  .brand small { display: block; font-family: var(--font-body); font-size: 9px; font-weight: 700; color: var(--lila-300); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px; }
+  .sidenav { display: flex; flex-direction: column; gap: 2px; }
+  .navitem { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; font-size: 14px; color: var(--cream-300); cursor: pointer; font-weight: 600; }
+  .navitem:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .navitem.active { background: var(--lila-400); color: #fff; }
+  .navitem .badge { margin-left: auto; background: rgba(255,255,255,0.16); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .navitem.active .badge { background: rgba(0,0,0,0.18); }
+  .side h6 { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-400); margin: 22px 12px 8px; font-weight: 700; }
+  .side .me { margin-top: auto; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 14px; display: flex; align-items: center; gap: 10px; }
+  .me .av { width: 34px; height: 34px; border-radius: 999px; background: var(--lila-400); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; }
+  .me .name { font-size: 13px; font-weight: 700; color: #fff; }
+  .me .role { font-size: 11px; color: var(--cream-400); }
+  /* MAIN */
+  main.main { padding: 28px 36px 60px; min-width: 0; }
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+  .page-head h1 { margin: 0; font-family: var(--font-display); font-size: 32px; font-weight: 500; line-height: 1.15; }
+  .page-head .greet { display: block; font-family: var(--font-script); color: var(--lila-500); font-size: 22px; line-height: 1.1; margin-bottom: 6px; }
+  .page-head .right { display: flex; gap: 10px; }
+  .iconbtn { width: 40px; height: 40px; border-radius: 999px; background: #fff; box-shadow: var(--shadow-xs); border: none; cursor: pointer; color: var(--fg2); display: inline-flex; align-items: center; justify-content: center; }
+  .iconbtn:hover { background: var(--cream-100); }
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 22px 0 26px; }
+  .stat { background: #fff; border-radius: var(--r-lg); padding: 18px; box-shadow: var(--shadow-xs); }
+  .stat .lbl { font-size: 11px; color: var(--fg3); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .stat .val { font-family: var(--font-display); font-size: 32px; font-weight: 600; color: var(--fg1); margin-top: 4px; font-feature-settings: "tnum"; }
+  .stat .delta { font-size: 12px; color: var(--success); margin-top: 2px; }
+  .stat.lila { background: var(--lila-100); }
+  .stat.lila .val { color: var(--lila-600); }
+  /* TABS */
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; border-bottom: 1px solid var(--cream-300); }
+  .tab { padding: 10px 16px; font-size: 14px; font-weight: 700; color: var(--fg3); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab.active { color: var(--fg1); border-bottom-color: var(--brand); }
+  .tab .num { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--cream-200); font-size: 11px; margin-left: 6px; color: var(--fg2); }
+  .tab.active .num { background: var(--lila-200); color: var(--lila-600); }
+  /* TABLE / list */
+  .orders { background: #fff; border-radius: var(--r-xl); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .otable { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .otable thead th { text-align: left; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg3); padding: 14px 16px; background: var(--cream-50); border-bottom: 1px solid var(--cream-200); font-weight: 700; }
+  .otable tbody tr { border-bottom: 1px solid var(--cream-100); cursor: pointer; transition: background var(--dur-1) var(--ease-out); }
+  .otable tbody tr:hover { background: var(--cream-50); }
+  .otable td { padding: 14px 16px; vertical-align: middle; }
+  .ocode { font-family: ui-monospace, monospace; font-size: 12px; color: var(--fg3); }
+  .oname { font-weight: 700; color: var(--fg1); }
+  .oitems { font-size: 12px; color: var(--fg3); margin-top: 2px; }
+  .opill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+  .opill .dot { width: 6px; height: 6px; border-radius: 999px; }
+  .st-recibido { background: var(--lila-100); color: var(--lila-600); }
+  .st-recibido .dot { background: var(--lila-500); }
+  .st-prep { background: #FBF1DE; color: #8A6A2E; }
+  .st-prep .dot { background: #D8A24A; }
+  .st-listo { background: #E9EFE3; color: var(--success); }
+  .st-listo .dot { background: var(--success); }
+  .st-entreg { background: var(--cream-200); color: var(--fg3); }
+  .st-entreg .dot { background: var(--fg3); }
+  .modechip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--fg2); }
+  .price { font-family: var(--font-display); font-weight: 600; font-size: 16px; font-feature-settings: "tnum"; color: var(--fg1); }
+  /* DETAIL */
+  .detail-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
+  .panel { background: #fff; border-radius: var(--r-xl); padding: 22px 24px; box-shadow: var(--shadow-sm); }
+  .panel h3 { font-family: var(--font-display); font-size: 20px; margin: 0 0 14px; font-weight: 500; }
+  .back { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--fg3); font-size: 13px; margin-bottom: 10px; }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 8px 0 18px; }
+  .step { text-align: center; position: relative; padding: 0 4px; }
+  .step .circle { width: 32px; height: 32px; border-radius: 999px; background: var(--cream-200); color: var(--fg3); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+  .step.done .circle { background: var(--success); color: #fff; }
+  .step.cur .circle { background: var(--lila-400); color: #fff; box-shadow: 0 0 0 4px var(--lila-100); }
+  .step .lbl { font-size: 12px; font-weight: 700; color: var(--fg2); }
+  .step .when { font-size: 10px; color: var(--fg3); }
+  .step::after { content: ''; position: absolute; top: 16px; left: 60%; right: -40%; height: 2px; background: var(--cream-200); z-index: -1; }
+  .step.done::after { background: var(--success); }
+  .step:last-child::after { display: none; }
+  .items { }
+  .items .row { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--cream-200); align-items: center; }
+  .items .row:last-child { border-bottom: none; }
+  .items .ph { width: 56px; height: 56px; border-radius: 12px; overflow: hidden; }
+  .items .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .items .qn { font-weight: 700; }
+  .items .pr { font-family: var(--font-display); font-weight: 600; font-feature-settings: "tnum"; }
+  .totals { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--cream-200); }
+  .totals .l { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; color: var(--fg2); }
+  .totals .t { font-size: 18px; font-weight: 700; color: var(--fg1); padding-top: 8px; border-top: 1px dashed var(--cream-300); margin-top: 4px; }
+  .info-row { display: grid; grid-template-columns: 24px 1fr; gap: 12px; padding: 8px 0; align-items: start; }
+  .info-row .lbl { font-size: 11px; font-weight: 700; color: var(--fg3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+  .info-row .v { font-size: 14px; color: var(--fg1); font-weight: 600; }
+  .actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .btn { font-family: var(--font-body); font-weight: 700; font-size: 14px; border: none; cursor: pointer; padding: 10px 18px; border-radius: 999px; display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; transition: background var(--dur-2) var(--ease-out); }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--brand-hover); }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-ghost { background: transparent; color: var(--fg2); box-shadow: inset 0 0 0 1.5px var(--border-default); }
+  .btn-ghost:hover { background: var(--cream-100); }
+  /* search bar */
+  .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .search { background: #fff; border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-xs); flex: 1; max-width: 320px; }
+  .search input { border: none; outline: none; flex: 1; font-family: inherit; font-size: 14px; background: transparent; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect } = React;
+const Icon = ({n, s=18}) => <i data-lucide={n} style={{width:s,height:s}}></i>;
+
+const ORDERS = [
+  {id:'DBV-4521', cust:'Sofía P.', wa:'11 5421 7890', items:[
+    {n:'Cookie NY · dulce de leche', q:6, p:3500, img:'../../assets/products/cookie-ny-dulce-leche.jpg'},
+    {n:'Roles · oreo & ddl', q:1, p:5200, img:'../../assets/products/roles-oreo-dulce-leche.jpg'}],
+    mode:'retiro', date:'Hoy · 16h–18h', addr:'Palermo (retiro)', card:'¡Feliz cumple, Sofi!', status:'prep', ts:'14:02'},
+  {id:'DBV-4520', cust:'Mariana G.', wa:'11 6712 3344', items:[
+    {n:'Torta chocolate-merengue', q:1, p:18000, img:'../../assets/products/torta-chocolate-merengue.jpg'}],
+    mode:'delivery', date:'Hoy · 18h–20h', addr:'Av. Córdoba 4521, CABA', card:'', status:'recibido', ts:'13:48'},
+  {id:'DBV-4519', cust:'Joaquín M.', wa:'11 3308 9912', items:[
+    {n:'Cajita Día de la Madre', q:2, p:9800, img:'../../assets/products/caja-dia-madre.jpg'}],
+    mode:'retiro', date:'Hoy · 11h–13h', addr:'Palermo (retiro)', card:'Para mamá ❤', status:'listo', ts:'12:10'},
+  {id:'DBV-4518', cust:'Lautaro D.', wa:'11 2210 5544', items:[
+    {n:'Roles clásicos', q:2, p:4800, img:'../../assets/products/cajas-roles-canela.jpg'},
+    {n:'Cookie NY · Nutella', q:4, p:3500, img:'../../assets/products/canasta-cookies-nutella.jpg'}],
+    mode:'delivery', date:'Mañana · 14h–17h', addr:'Honduras 5612, CABA', card:'', status:'recibido', ts:'11:22'},
+  {id:'DBV-4517', cust:'Camila R.', wa:'11 7700 1212', items:[
+    {n:'Alfajores surtidos', q:1, p:7400, img:'../../assets/products/caja-alfajores-corazon.jpg'}],
+    mode:'retiro', date:'Hoy · 09h–11h', addr:'Palermo (retiro)', card:'', status:'entreg', ts:'09:45'},
+  {id:'DBV-4516', cust:'Tomás F.', wa:'11 5050 8080', items:[
+    {n:'Cajita San Valentín', q:1, p:8900, img:'../../assets/products/caja-san-valentin.jpg'}],
+    mode:'delivery', date:'Vie 8 · 14h–17h', addr:'Soler 3120, CABA', card:'Para Lu 💌', status:'recibido', ts:'10:55'},
+];
+
+const STATUS_LABEL = {recibido:'Recibido', prep:'En preparación', listo:'Listo', entreg:'Entregado'};
+const fmt = n => '$' + n.toLocaleString('es-AR');
+
+function App(){
+  const [view, setView] = useState({page:'orders'});
+  const [tab, setTab] = useState('hoy');
+  useEffect(() => { window.lucide?.createIcons({attrs:{'stroke-width':1.75}}); });
+
+  return (<div className="layout">
+    <Sidebar active={view.page} onNav={(p)=>setView({page:p})}/>
+    <main className="main">
+      {view.page==='orders' && <OrdersPage tab={tab} setTab={setTab} onOpen={(o)=>setView({page:'detail', order:o})}/>}
+      {view.page==='detail' && <DetailPage order={view.order} onBack={()=>setView({page:'orders'})}/>}
+      {view.page==='catalog' && <Placeholder title="Productos" sub="Acá vas a poder editar tu catálogo: precios, fotos, stock del día." icon="cookie"/>}
+      {view.page==='cal' && <Placeholder title="Calendario" sub="Vista semanal de pedidos por día de retiro/entrega." icon="calendar-days"/>}
+      {view.page==='clientes' && <Placeholder title="Clientes" sub="Lista de clientes recurrentes con su historial." icon="users-round"/>}
+    </main>
+  </div>);
+}
+
+function Sidebar({active, onNav}){
+  const items = [
+    {id:'orders', n:'Pedidos', icon:'package', badge:'3'},
+    {id:'cal', n:'Calendario', icon:'calendar-days'},
+    {id:'catalog', n:'Productos', icon:'cookie'},
+    {id:'clientes', n:'Clientes', icon:'users-round'},
+  ];
+  return (<aside className="side" style={{display:'flex', flexDirection:'column'}}>
+    <div className="brand">
+      <img src="../../assets/logo-sticker.svg" alt=""/>
+      <div className="word">delicate<small>BY VIKY · ADMIN</small></div>
+    </div>
+    <h6>Hoy</h6>
+    <nav className="sidenav">
+      {items.map(i => (
+        <div key={i.id} className={'navitem'+(active===i.id?' active':'')} onClick={()=>onNav(i.id)}>
+          <Icon n={i.icon} s={18}/> {i.n} {i.badge && <span className="badge">{i.badge}</span>}
+        </div>
+      ))}
+    </nav>
+    <h6>Configuración</h6>
+    <nav className="sidenav">
+      <div className="navitem"><Icon n="settings" s={18}/> Ajustes</div>
+      <div className="navitem"><Icon n="help-circle" s={18}/> Ayuda</div>
+    </nav>
+    <div className="me">
+      <div className="av">V</div>
+      <div><div className="name">Viky</div><div className="role">Pastelera</div></div>
+    </div>
+  </aside>);
+}
+
+function OrdersPage({tab, setTab, onOpen}){
+  const today = ['hoy','recibido','prep','listo'].includes(tab);
+  const filtered = ORDERS.filter(o => {
+    if (tab==='hoy') return ['recibido','prep','listo'].includes(o.status);
+    if (tab==='proximos') return o.date.startsWith('Mañana') || o.date.startsWith('Vie');
+    if (tab==='entreg') return o.status==='entreg';
+    return o.status === tab;
+  });
+  return (<>
+    <div className="page-head">
+      <div>
+        <div className="greet">¡buen día, Viky!</div>
+        <h1>Pedidos</h1>
+      </div>
+      <div className="right">
+        <button className="iconbtn"><Icon n="bell" s={18}/></button>
+        <button className="btn btn-primary"><Icon n="plus" s={16}/> Nuevo pedido</button>
+      </div>
+    </div>
+
+    <div className="stats">
+      <div className="stat lila"><div className="lbl">Hoy</div><div className="val">3</div><div className="delta" style={{color:'var(--lila-500)'}}>2 retiros · 1 delivery</div></div>
+      <div className="stat"><div className="lbl">En prep</div><div className="val">1</div><div className="delta">listo en ~2h</div></div>
+      <div className="stat"><div className="lbl">Esta semana</div><div className="val">12</div><div className="delta">+3 vs semana pasada</div></div>
+      <div className="stat"><div className="lbl">Facturado · mes</div><div className="val">$184k</div><div className="delta">de $250k objetivo</div></div>
+    </div>
+
+    <div className="tabs">
+      <div className={'tab'+(tab==='hoy'?' active':'')} onClick={()=>setTab('hoy')}>Hoy <span className="num">3</span></div>
+      <div className={'tab'+(tab==='proximos'?' active':'')} onClick={()=>setTab('proximos')}>Próximos <span className="num">2</span></div>
+      <div className={'tab'+(tab==='entreg'?' active':'')} onClick={()=>setTab('entreg')}>Entregados <span className="num">1</span></div>
+    </div>
+
+    <div className="toolbar">
+      <div className="search"><Icon n="search" s={16}/><input placeholder="Buscar pedido, nombre, WhatsApp…"/></div>
+      <button className="btn btn-ghost"><Icon n="filter" s={16}/> Filtrar</button>
+      <button className="btn btn-ghost"><Icon n="download" s={16}/> Exportar</button>
+    </div>
+
+    <div className="orders"><table className="otable">
+      <thead><tr>
+        <th>Pedido</th><th>Cliente</th><th>Cuándo</th><th>Modo</th><th>Total</th><th>Estado</th><th></th>
+      </tr></thead>
+      <tbody>
+        {filtered.map(o => (
+          <tr key={o.id} onClick={()=>onOpen(o)}>
+            <td><div className="ocode">{o.id}</div><div style={{fontSize:11, color:'var(--fg3)', marginTop:2}}>recibido {o.ts}</div></td>
+            <td><div className="oname">{o.cust}</div><div className="oitems">{o.items.map(i=>`${i.q}× ${i.n}`).join(' · ')}</div></td>
+            <td>{o.date}</td>
+            <td><span className="modechip"><Icon n={o.mode==='retiro'?'store':'bike'} s={14}/> {o.mode==='retiro'?'Retiro':'Delivery'}</span></td>
+            <td><span className="price">{fmt(o.items.reduce((a,i)=>a+i.q*i.p,0))}</span></td>
+            <td><span className={'opill st-'+o.status}><span className="dot"></span>{STATUS_LABEL[o.status]}</span></td>
+            <td><Icon n="chevron-right" s={18}/></td>
+          </tr>
+        ))}
+      </tbody>
+    </table></div>
+  </>);
+}
+
+function DetailPage({order, onBack}){
+  const [status, setStatus] = useState(order.status);
+  const subtotal = order.items.reduce((a,i)=>a+i.q*i.p, 0);
+  const ship = order.mode==='delivery' ? 1500 : 0;
+  const flow = ['recibido','prep','listo','entreg'];
+  const ix = flow.indexOf(status);
+  const next = flow[ix+1];
+  const nextLabel = {prep:'Empezar a preparar', listo:'Marcar lista', entreg:'Marcar entregada'}[next];
+
+  return (<>
+    <div className="back" onClick={onBack}><Icon n="arrow-left" s={16}/> Volver a pedidos</div>
+    <div className="page-head">
+      <div>
+        <div className="greet">pedido</div>
+        <h1>{order.id} · {order.cust}</h1>
+      </div>
+      <div className="right">
+        <button className="btn btn-ghost"><Icon n="message-circle" s={16}/> WhatsApp</button>
+        <button className="btn btn-ghost"><Icon n="printer" s={16}/> Imprimir</button>
+      </div>
+    </div>
+
+    <div style={{margin:'18px 0 24px', background:'#fff', padding:'18px 22px', borderRadius:'var(--r-xl)', boxShadow:'var(--shadow-xs)'}}>
+      <div className="timeline">
+        {flow.map((s, i) => (
+          <div key={s} className={'step '+(i<ix?'done':i===ix?'cur':'')}>
+            <div className="circle">{i<ix ? <Icon n="check" s={16}/> : i+1}</div>
+            <div className="lbl">{STATUS_LABEL[s]}</div>
+            <div className="when">{i<=ix ? (i===0?order.ts:'—') : ''}</div>
+          </div>
+        ))}
+      </div>
+      {next && <div className="actions"><button className="btn btn-primary" onClick={()=>setStatus(next)}><Icon n="arrow-right" s={16}/> {nextLabel}</button>
+        <button className="btn btn-ghost"><Icon n="x" s={16}/> Cancelar pedido</button></div>}
+      {!next && <div style={{color:'var(--success)', fontWeight:700, fontSize:14, display:'inline-flex', alignItems:'center', gap:6}}><Icon n="check-circle-2" s={18}/> Pedido entregado.</div>}
+    </div>
+
+    <div className="detail-grid">
+      <div className="panel">
+        <h3>Lo que pidió</h3>
+        <div className="items">
+          {order.items.map((i, ix) => (
+            <div key={ix} className="row">
+              <div className="ph"><img src={i.img} alt=""/></div>
+              <div><div style={{fontWeight:700}}>{i.n}</div><div style={{fontSize:12, color:'var(--fg3)', marginTop:2}}>{i.q} unidad{i.q>1?'es':''} × {fmt(i.p)}</div></div>
+              <div className="pr">{fmt(i.q*i.p)}</div>
+            </div>
+          ))}
+        </div>
+        <div className="totals">
+          <div className="l"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
+          <div className="l"><span>Envío</span><span>{ship?fmt(ship):'sin cargo'}</span></div>
+          <div className="l t"><span>Total</span><span>{fmt(subtotal+ship)}</span></div>
+        </div>
+      </div>
+      <div className="panel">
+        <h3>Detalles</h3>
+        <div className="info-row"><Icon n="user-round" s={18}/><div><div className="lbl">Cliente</div><div className="v">{order.cust}</div></div></div>
+        <div className="info-row"><Icon n="phone" s={18}/><div><div className="lbl">WhatsApp</div><div className="v">{order.wa}</div></div></div>
+        <div className="info-row"><Icon n={order.mode==='retiro'?'store':'bike'} s={18}/><div><div className="lbl">{order.mode==='retiro'?'Retiro':'Delivery'}</div><div className="v">{order.addr}</div></div></div>
+        <div className="info-row"><Icon n="calendar-days" s={18}/><div><div className="lbl">Cuándo</div><div className="v">{order.date}</div></div></div>
+        {order.card && <div className="info-row"><Icon n="message-square-heart" s={18}/><div><div className="lbl">Tarjetita</div><div className="v" style={{fontFamily:'var(--font-script)', fontSize:18, color:'var(--lila-500)', fontWeight:600}}>"{order.card}"</div></div></div>}
+        <div className="info-row"><Icon n="credit-card" s={18}/><div><div className="lbl">Pago</div><div className="v" style={{color:'var(--success)'}}>Transferencia · acreditada</div></div></div>
+      </div>
+    </div>
+  </>);
+}
+
+function Placeholder({title, sub, icon}){
+  return (<><div className="page-head"><div><h1>{title}</h1></div></div>
+    <div style={{padding:'80px 20px', textAlign:'center', background:'#fff', borderRadius:'var(--r-xl)', boxShadow:'var(--shadow-sm)', marginTop:20}}>
+      <div style={{width:64, height:64, borderRadius:999, background:'var(--lila-100)', color:'var(--lila-500)', display:'inline-flex', alignItems:'center', justifyContent:'center', marginBottom:14}}><Icon n={icon} s={28}/></div>
+      <div style={{fontFamily:'var(--font-script)', fontSize:24, color:'var(--lila-500)', marginBottom:6}}>en construcción</div>
+      <p style={{maxWidth:400, margin:'0 auto', color:'var(--fg3)'}}>{sub}</p>
+    </div></>);
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

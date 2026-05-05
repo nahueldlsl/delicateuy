@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="delicate by Viky sticker logo">
+  <defs>
+    <radialGradient id="stickerGrad" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#C9A8E6"></stop>
+      <stop offset="100%" stop-color="#A988CC"></stop>
+    </radialGradient>
+    <filter id="stickerShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
+      <feOffset dx="0" dy="3" result="offsetblur"></feOffset>
+      <feComponentTransfer><feFuncA type="linear" slope="0.25"></feFuncA></feComponentTransfer>
+      <feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+  </defs>
+
+  
+  <circle cx="200" cy="200" r="190" fill="url(#stickerGrad)" filter="url(#stickerShadow)"></circle>
+  <circle cx="200" cy="200" r="190" fill="none" stroke="#9776BD" stroke-width="2" opacity="0.4"></circle>
+
+  
+  <g stroke-linecap="round" stroke-width="6">
+    <line x1="60" y1="80" x2="78" y2="74" stroke="#F4B7C9"></line>
+    <line x1="120" y1="50" x2="138" y2="56" stroke="#A8D2EC"></line>
+    <line x1="200" y1="40" x2="216" y2="48" stroke="#F4D58D"></line>
+    <line x1="280" y1="60" x2="294" y2="50" stroke="#F4B7C9"></line>
+    <line x1="330" y1="110" x2="346" y2="100" stroke="#FFFFFF"></line>
+    <line x1="90" y1="130" x2="106" y2="120" stroke="#A8D2EC"></line>
+    <line x1="350" y1="180" x2="368" y2="174" stroke="#F4B7C9"></line>
+    <line x1="50" y1="200" x2="68" y2="210" stroke="#F4D58D"></line>
+    <line x1="60" y1="280" x2="76" y2="288" stroke="#FFFFFF"></line>
+    <line x1="110" y1="330" x2="128" y2="324" stroke="#A8D2EC"></line>
+    <line x1="200" y1="360" x2="216" y2="352" stroke="#F4B7C9"></line>
+    <line x1="280" y1="340" x2="296" y2="350" stroke="#F4D58D"></line>
+    <line x1="340" y1="290" x2="358" y2="284" stroke="#FFFFFF"></line>
+    <line x1="320" y1="240" x2="336" y2="248" stroke="#F4B7C9"></line>
+    <line x1="80" y1="240" x2="96" y2="248" stroke="#F4D58D"></line>
+    <line x1="170" y1="100" x2="186" y2="92" stroke="#FFFFFF"></line>
+    <line x1="250" y1="320" x2="266" y2="312" stroke="#A8D2EC"></line>
+    <line x1="160" y1="60" x2="176" y2="70" stroke="#F4D58D"></line>
+    <line x1="40" y1="160" x2="56" y2="152" stroke="#FFFFFF"></line>
+    <line x1="290" y1="120" x2="306" y2="112" stroke="#A8D2EC"></line>
+    <line x1="220" y1="320" x2="236" y2="328" stroke="#FFFFFF"></line>
+    <line x1="370" y1="230" x2="384" y2="222" stroke="#F4D58D"></line>
+  </g>
+
+  
+  <text x="200" y="215" text-anchor="middle" font-family="&#39;Pacifico&#39;, &#39;Caveat&#39;, &#39;Brush Script MT&#39;, cursive" font-size="78" fill="#FFFFFF" letter-spacing="-1">delicate</text>
+
+  
+  <text x="200" y="252" text-anchor="middle" font-family="&#39;Nunito&#39;, &#39;Poppins&#39;, sans-serif" font-size="22" font-weight="600" font-style="italic" fill="#FFFFFF" letter-spacing="2">by Viky</text>
+</svg>

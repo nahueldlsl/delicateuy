@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<title>Colors — Earth & cocoa</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 20px; background: var(--cream-50); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .swatch { height: 88px; border-radius: var(--r-md); display: flex; flex-direction: column; justify-content: flex-end; padding: 8px 10px; box-shadow: var(--shadow-xs); }
+  .swatch .name { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .swatch .hex { font-family: var(--font-body); font-size: 11px; opacity: 0.85; font-feature-settings: "tnum"; }
+  .label-dark .name, .label-dark .hex { color: var(--cream-50); }
+  .label-light .name, .label-light .hex { color: var(--choc-900); }
+  h4 { font-family: var(--font-body); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg3); margin: 0 0 8px; font-weight: 700; }
+  .row { margin-bottom: 12px; }
+</style></head><body>
+<div class="row"><h4>Chocolate / cocoa</h4>
+<div class="grid">
+  <div class="swatch label-dark" style="background:#2A1810"><div class="name">choc 900</div><div class="hex">#2A1810</div></div>
+  <div class="swatch label-dark" style="background:#3D2418"><div class="name">choc 800</div><div class="hex">#3D2418</div></div>
+  <div class="swatch label-dark" style="background:#5A3826"><div class="name">choc 700</div><div class="hex">#5A3826</div></div>
+  <div class="swatch label-dark" style="background:#7A4F33"><div class="name">choc 600</div><div class="hex">#7A4F33</div></div>
+  <div class="swatch label-dark" style="background:#9B6A47"><div class="name">choc 500</div><div class="hex">#9B6A47</div></div>
+</div></div>
+<div class="row"><h4>Dulce de leche</h4>
+<div class="grid">
+  <div class="swatch label-dark" style="background:#A66A3A"><div class="name">dulce 700</div><div class="hex">#A66A3A</div></div>
+  <div class="swatch label-dark" style="background:#C58453"><div class="name">dulce 600</div><div class="hex">#C58453</div></div>
+  <div class="swatch label-light" style="background:#D9A574"><div class="name">dulce 500</div><div class="hex">#D9A574</div></div>
+  <div class="swatch label-light" style="background:#E6BF95"><div class="name">dulce 400</div><div class="hex">#E6BF95</div></div>
+  <div class="swatch label-light" style="background:#F5EDE2"><div class="name">cream 200</div><div class="hex">#F5EDE2</div></div>
+</div></div>
+</body></html>

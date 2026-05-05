@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>delicate by Viky — storefront</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  /* HEADER */
+  .hdr { position: sticky; top: 0; z-index: 50; background: rgba(253,250,245,0.86); backdrop-filter: blur(12px); border-bottom: 1px solid var(--cream-200); }
+  .hdr-row { display: flex; align-items: center; gap: 24px; padding: 14px 0; }
+  .hdr-logo { display: flex; align-items: center; gap: 10px; }
+  .hdr-logo img { width: 44px; height: 44px; }
+  .hdr-logo .word { font-family: var(--font-script); font-size: 30px; line-height: 1; color: var(--choc-700); }
+  .hdr-logo .word small { font-family: var(--font-body); font-size: 11px; font-weight: 700; color: var(--lila-500); letter-spacing: 0.18em; text-transform: uppercase; display: block; margin-top: 2px; }
+  nav { display: flex; gap: 22px; margin-left: 18px; }
+  nav a { font-size: 14px; font-weight: 600; color: var(--fg2); cursor: pointer; }
+  nav a.active { color: var(--brand); }
+  .hdr-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .iconbtn { width: 42px; height: 42px; border-radius: 999px; background: transparent; color: var(--fg2); border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; position: relative; transition: background var(--dur-2) var(--ease-out); }
+  .iconbtn:hover { background: var(--cream-200); }
+  .cart-pill { position: absolute; top: 4px; right: 2px; background: var(--brand); color: #fff; font-size: 10px; font-weight: 800; min-width: 18px; height: 18px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding: 0 4px; }
+  /* HERO */
+  .hero { padding: 32px 0 28px; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 36px; align-items: center; }
+  .hero h1 { margin: 0 0 14px; }
+  .hero-sub { font-size: 17px; color: var(--fg2); max-width: 460px; margin: 0 0 24px; }
+  .hero-script { font-family: var(--font-script); color: var(--lila-500); font-size: 28px; line-height: 1; margin-bottom: 8px; }
+  .hero-photo { aspect-ratio: 4/5; background: var(--cream-200); border-radius: var(--r-2xl); overflow: hidden; box-shadow: var(--shadow-lg); position: relative; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-sticker { position: absolute; right: -22px; top: -22px; width: 120px; height: 120px; transform: rotate(8deg); }
+  .btn { font-family: var(--font-body); font-weight: 700; font-size: 15px; border: none; cursor: pointer; padding: 14px 26px; border-radius: 999px; transition: background var(--dur-2) var(--ease-out), transform var(--dur-1) var(--ease-out); display: inline-flex; gap: 8px; align-items: center; }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--brand-hover); }
+  .btn-ghost { background: transparent; color: var(--fg1); box-shadow: inset 0 0 0 1.5px var(--border-default); }
+  .btn-ghost:hover { background: var(--cream-100); }
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-accent:hover { background: var(--accent-hover); }
+  .hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hero-meta { display: flex; gap: 18px; margin-top: 22px; color: var(--fg3); font-size: 13px; }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  /* CATEGORY CHIPS */
+  .cat-row { display: flex; gap: 10px; padding: 8px 0 24px; overflow-x: auto; }
+  .cat { padding: 10px 18px; border-radius: 999px; background: #fff; box-shadow: var(--shadow-xs); font-size: 14px; font-weight: 700; color: var(--fg2); cursor: pointer; white-space: nowrap; transition: all var(--dur-2) var(--ease-out); }
+  .cat.active { background: var(--brand); color: #fff; box-shadow: var(--shadow-sm); }
+  .cat:not(.active):hover { background: var(--cream-100); }
+  /* PRODUCT GRID */
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 8px 0 18px; }
+  .section-head h2 { margin: 0; }
+  .section-head .more { font-size: 14px; font-weight: 700; color: var(--lila-500); cursor: pointer; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .hero-grid { grid-template-columns: 1fr; } }
+  .pcard { background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; cursor: pointer; transition: box-shadow var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out); }
+  .pcard:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+  .pcard .photo { aspect-ratio: 1; overflow: hidden; position: relative; background: var(--cream-200); }
+  .pcard .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-3) var(--ease-out); }
+  .pcard:hover .photo img { transform: scale(1.05); }
+  .pcard .photo .badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.95); color: var(--lila-600); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; }
+  .pcard .body { padding: 14px 16px 16px; }
+  .pcard .tag { font-family: var(--font-script); font-size: 17px; color: var(--lila-500); line-height: 1; margin-bottom: 6px; }
+  .pcard h3 { font-family: var(--font-body); font-size: 16px; font-weight: 700; color: var(--fg1); margin: 0 0 4px; }
+  .pcard .blurb { font-size: 13px; color: var(--fg3); margin: 0 0 10px; line-height: 1.4; min-height: 36px; }
+  .pcard .row { display: flex; align-items: center; justify-content: space-between; }
+  .pcard .price { font-family: var(--font-display); font-weight: 600; font-size: 20px; color: var(--fg1); font-feature-settings: "tnum"; }
+  .add { background: var(--brand); color: #fff; border: none; border-radius: 999px; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out); }
+  .add:hover { background: var(--brand-hover); }
+  .add:active { transform: scale(0.92); }
+  /* PROMO BANNER */
+  .promo { background: var(--lila-100); border-radius: var(--r-xl); padding: 26px 32px; margin: 40px 0; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 20px; }
+  .promo h3 { font-family: var(--font-display); font-size: 26px; color: var(--lila-600); margin: 0 0 6px; font-weight: 500; }
+  .promo p { color: var(--lila-600); margin: 0; font-size: 14px; }
+  /* CART DRAWER */
+  .scrim { position: fixed; inset: 0; background: rgba(42,24,16,0.4); z-index: 100; opacity: 0; pointer-events: none; transition: opacity var(--dur-2) var(--ease-out); }
+  .scrim.open { opacity: 1; pointer-events: auto; }
+  .drawer { position: fixed; top: 0; right: 0; width: 420px; max-width: 100vw; height: 100vh; background: var(--cream-50); z-index: 101; transform: translateX(100%); transition: transform var(--dur-3) var(--ease-out); display: flex; flex-direction: column; box-shadow: var(--shadow-xl); }
+  .drawer.open { transform: translateX(0); }
+  .drawer-head { padding: 20px 24px 12px; display: flex; align-items: center; justify-content: space-between; }
+  .drawer-head h3 { margin: 0; font-family: var(--font-display); font-size: 24px; }
+  .drawer-body { padding: 8px 24px; flex: 1; overflow-y: auto; }
+  .drawer-foot { padding: 20px 24px 24px; border-top: 1px solid var(--cream-200); background: #fff; }
+  .citem { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--cream-200); align-items: center; }
+  .citem .ph { width: 64px; height: 64px; border-radius: 12px; overflow: hidden; }
+  .citem .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .citem h4 { font-size: 14px; font-weight: 700; margin: 0 0 4px; color: var(--fg1); }
+  .citem .qty { display: inline-flex; align-items: center; gap: 4px; background: #fff; border-radius: 999px; padding: 2px; box-shadow: var(--shadow-xs); }
+  .citem .qty button { width: 24px; height: 24px; border: none; background: transparent; border-radius: 999px; cursor: pointer; color: var(--fg2); display: inline-flex; align-items: center; justify-content: center; }
+  .citem .qty button:hover { background: var(--cream-100); }
+  .citem .qty span { font-size: 13px; font-weight: 700; min-width: 14px; text-align: center; }
+  .citem .price { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+  .empty { text-align: center; padding: 60px 20px; color: var(--fg3); }
+  .empty .ico { width: 56px; height: 56px; border-radius: 999px; background: var(--cream-200); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px; color: var(--fg3); }
+  .empty p { font-size: 15px; }
+  /* totals */
+  .totals { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .totals .line { display: flex; justify-content: space-between; font-size: 14px; color: var(--fg2); }
+  .totals .line.total { font-size: 18px; color: var(--fg1); font-weight: 700; padding-top: 8px; border-top: 1px dashed var(--cream-300); }
+  /* CHECKOUT */
+  .checkout { padding: 24px 0 60px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; }
+  @media (max-width: 900px) { .checkout { grid-template-columns: 1fr; } }
+  .panel { background: #fff; border-radius: var(--r-xl); padding: 24px; box-shadow: var(--shadow-sm); }
+  .panel h3 { margin: 0 0 16px; font-family: var(--font-display); font-size: 22px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12px; font-weight: 700; color: var(--fg2); margin-bottom: 6px; }
+  .input { width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; color: var(--fg1); background: var(--cream-100); border: none; border-radius: 14px; padding: 12px 16px; outline: none; transition: box-shadow var(--dur-2) var(--ease-out); }
+  .input:focus { box-shadow: 0 0 0 2px var(--cream-50), 0 0 0 4px var(--lila-300); }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .seg-opt { padding: 16px; border-radius: 14px; background: var(--cream-100); cursor: pointer; transition: all var(--dur-2) var(--ease-out); }
+  .seg-opt.on { background: var(--lila-100); box-shadow: inset 0 0 0 2px var(--lila-400); }
+  .seg-opt .t { font-weight: 700; color: var(--fg1); display: flex; align-items: center; gap: 8px; }
+  .seg-opt .s { font-size: 12px; color: var(--fg3); margin-top: 4px; }
+  .summary-card .line { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+  .summary-card .total { padding-top: 12px; margin-top: 4px; border-top: 1px dashed var(--cream-300); font-weight: 700; font-size: 18px; }
+  /* CONFIRMATION */
+  .confirm { padding: 60px 0; text-align: center; max-width: 540px; margin: 0 auto; }
+  .confirm .heart { font-size: 64px; margin-bottom: 16px; }
+  .confirm h1 { margin-bottom: 12px; }
+  .confirm .num { display: inline-block; background: var(--cream-100); padding: 8px 16px; border-radius: 999px; font-family: ui-monospace, monospace; font-size: 14px; color: var(--fg2); margin-bottom: 22px; }
+  .recap { background: #fff; border-radius: var(--r-xl); padding: 22px; box-shadow: var(--shadow-sm); text-align: left; margin-top: 24px; }
+  .recap h4 { font-family: var(--font-display); font-size: 18px; margin: 0 0 12px; font-weight: 500; }
+  .recap .li { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+  /* PRODUCT DETAIL */
+  .pdp { padding: 28px 0 60px; display: grid; grid-template-columns: 1.05fr 1fr; gap: 36px; align-items: start; }
+  @media (max-width: 900px) { .pdp { grid-template-columns: 1fr; } }
+  .pdp-photo { aspect-ratio: 1; border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-md); background: var(--cream-200); }
+  .pdp-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .thumbs { display: flex; gap: 10px; margin-top: 12px; }
+  .thumbs .th { width: 72px; height: 72px; border-radius: 12px; overflow: hidden; cursor: pointer; opacity: 0.6; transition: opacity var(--dur-2) var(--ease-out); }
+  .thumbs .th.on { opacity: 1; box-shadow: 0 0 0 2px var(--brand); }
+  .thumbs .th img { width: 100%; height: 100%; object-fit: cover; }
+  .pdp-info .micro { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lila-500); font-weight: 700; }
+  .pdp-info h1 { margin: 6px 0 10px; }
+  .pdp-info .blurb { font-size: 16px; color: var(--fg2); margin: 0 0 24px; }
+  .pdp-info .price-row { display: flex; align-items: baseline; gap: 12px; margin: 0 0 24px; }
+  .pdp-info .price { font-family: var(--font-display); font-weight: 600; font-size: 36px; color: var(--fg1); font-feature-settings: "tnum"; }
+  .pdp-info .unit { font-size: 13px; color: var(--fg3); }
+  .qstep { display: inline-flex; align-items: center; gap: 6px; background: #fff; border-radius: 999px; padding: 4px; box-shadow: var(--shadow-xs); }
+  .qstep button { width: 36px; height: 36px; border: none; background: transparent; border-radius: 999px; cursor: pointer; color: var(--fg1); }
+  .qstep button:hover { background: var(--cream-100); }
+  .qstep span { min-width: 24px; text-align: center; font-weight: 700; }
+  .pdp-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 28px; }
+  .pdp-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pdp-meta .m { background: var(--cream-100); border-radius: 14px; padding: 14px; }
+  .pdp-meta .m .t { font-size: 12px; color: var(--fg3); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .pdp-meta .m .v { font-size: 14px; color: var(--fg1); font-weight: 600; }
+  /* footer */
+  footer { background: var(--choc-900); color: var(--cream-200); padding: 48px 0 28px; margin-top: 60px; }
+  footer .f { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
+  footer h5 { font-family: var(--font-display); font-size: 18px; color: #fff; margin: 0 0 12px; font-weight: 500; }
+  footer a, footer p { color: var(--cream-300); font-size: 14px; line-height: 1.7; }
+  footer .signoff { margin-top: 32px; padding-top: 20px; border-top: 1px solid #3D2418; font-size: 12px; color: var(--cream-400); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useMemo, useEffect } = React;
+
+const Icon = ({n, s=20}) => <i data-lucide={n} style={{width:s,height:s}}></i>;
+useEffect_lucide_refresh:; // marker
+
+// ---------- Catalog ----------
+const PRODUCTS = [
+  { id:'p1', cat:'cookies', name:'Cookie NY · dulce de leche', tag:'del horno de hoy', blurb:'Rellena de dulce de leche que se desborda al partirla. 120g.', price:3500, img:'../../assets/products/cookie-ny-dulce-leche.jpg', badge:'Top'},
+  { id:'p2', cat:'cookies', name:'Cookie NY · Nutella', tag:'cremosa por dentro', blurb:'Estilo NY rellena de Nutella. Se come tibia, en serio.', price:3500, img:'../../assets/products/canasta-cookies-nutella.jpg'},
+  { id:'p3', cat:'cookies', name:'Cookie NY · choco blanco', tag:'extra-chunky', blurb:'Con chips de chocolate blanco y dulce de leche. 120g.', price:3500, img:'../../assets/products/canasta-cookies.jpg'},
+  { id:'p4', cat:'roles', name:'Roles · oreo & ddl', tag:'recién glaseados', blurb:'Roles de canela glaseados, con Oreo y dulce de leche. 6 unidades.', price:5200, img:'../../assets/products/roles-oreo-dulce-leche.jpg', badge:'Nuevo'},
+  { id:'p5', cat:'roles', name:'Roles clásicos', tag:'masa esponjosa', blurb:'Roles de canela tradicionales, glaseado vainilla. 6 unidades.', price:4800, img:'../../assets/products/cajas-roles-canela.jpg'},
+  { id:'p6', cat:'tortas', name:'Torta chocolate-merengue', tag:'para festejar', blurb:'Bizcocho de chocolate, dulce de leche y merengue italiano con grana. 6 porciones.', price:18000, img:'../../assets/products/torta-chocolate-merengue.jpg'},
+  { id:'p7', cat:'cajas', name:'Cajita Día de la Madre', tag:'edición limitada', blurb:'Surtido de alfajores y cookies decoradas. Etiqueta especial.', price:9800, img:'../../assets/products/caja-dia-madre.jpg', badge:'Edición'},
+  { id:'p8', cat:'cajas', name:'Cajita San Valentín', tag:'con corazón', blurb:'Alfajores chocolatados y cookies en forma de corazón. Para regalar.', price:8900, img:'../../assets/products/caja-san-valentin.jpg'},
+  { id:'p9', cat:'alfajores', name:'Alfajores surtidos', tag:'caja blanca + vichy', blurb:'Mix de maicena con dulce de leche y chocolatados con grana. 9 unidades.', price:7400, img:'../../assets/products/caja-alfajores-corazon.jpg'},
+  { id:'p10', cat:'cajas', name:'Cajita Navidad', tag:'temporada', blurb:'Galletitas con glasé verde, rojo y blanco. Para mesa dulce.', price:9200, img:'../../assets/products/caja-navidad.jpg'},
+];
+const CATS = [
+  { id:'all', label:'Todo' },
+  { id:'cookies', label:'Cookies NY' },
+  { id:'roles', label:'Roles' },
+  { id:'alfajores', label:'Alfajores' },
+  { id:'tortas', label:'Tortas' },
+  { id:'cajas', label:'Cajitas' },
+];
+const fmt = n => '$' + n.toLocaleString('es-AR');
+
+// ---------- App shell ----------
+function App(){
+  const [view, setView] = useState({page:'home'});
+  const [cart, setCart] = useState([]);
+  const [drawer, setDrawer] = useState(false);
+
+  useEffect(() => { window.lucide?.createIcons({attrs:{'stroke-width':1.75}}); });
+
+  const addToCart = (p, qty=1) => {
+    setCart(c => {
+      const ix = c.findIndex(i=>i.id===p.id);
+      if (ix>=0) { const n=[...c]; n[ix]={...n[ix], qty:n[ix].qty+qty}; return n; }
+      return [...c, {...p, qty}];
+    });
+    setDrawer(true);
+  };
+  const setQty = (id, qty) => setCart(c => qty<=0 ? c.filter(i=>i.id!==id) : c.map(i=>i.id===id?{...i,qty}:i));
+  const subtotal = cart.reduce((a,i)=>a + i.price*i.qty, 0);
+  const cartCount = cart.reduce((a,i)=>a+i.qty, 0);
+
+  const go = (page, props={}) => { setView({page, ...props}); setDrawer(false); window.scrollTo({top:0}); };
+
+  return (<>
+    <Header cartCount={cartCount} onCart={()=>setDrawer(true)} onNav={go} active={view.page}/>
+    {view.page==='home' && <Home onProduct={(p)=>go('pdp',{product:p})} onAdd={addToCart}/>}
+    {view.page==='pdp' && <PDP product={view.product} onAdd={addToCart} onBack={()=>go('home')}/>}
+    {view.page==='checkout' && <Checkout cart={cart} subtotal={subtotal} onConfirm={()=>go('confirm')} onBack={()=>go('home')}/>}
+    {view.page==='confirm' && <Confirm cart={cart} subtotal={subtotal} onHome={()=>{setCart([]);go('home');}}/>}
+    <Footer/>
+    <CartDrawer open={drawer} onClose={()=>setDrawer(false)} cart={cart} setQty={setQty} subtotal={subtotal} onCheckout={()=>go('checkout')}/>
+  </>);
+}
+
+function Header({cartCount, onCart, onNav, active}){
+  return (
+    <header className="hdr"><div className="wrap hdr-row">
+      <div className="hdr-logo" onClick={()=>onNav('home')} style={{cursor:'pointer'}}>
+        <img src="../../assets/logo-sticker.svg" alt=""/>
+        <div className="word">delicate<small>BY VIKY</small></div>
+      </div>
+      <nav>
+        <a className={active==='home'?'active':''} onClick={()=>onNav('home')}>Menú</a>
+        <a>Cómo pedir</a>
+        <a>Contacto</a>
+      </nav>
+      <div className="hdr-actions">
+        <button className="iconbtn" aria-label="Buscar"><Icon n="search" s={20}/></button>
+        <button className="iconbtn" aria-label="Carrito" onClick={onCart}>
+          <Icon n="shopping-bag" s={22}/>
+          {cartCount>0 && <span className="cart-pill">{cartCount}</span>}
+        </button>
+      </div>
+    </div></header>
+  );
+}
+
+function Home({onProduct, onAdd}){
+  const [cat, setCat] = useState('all');
+  const products = useMemo(()=> cat==='all' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===cat), [cat]);
+  return (<main className="wrap">
+    <section className="hero">
+      <div className="hero-grid">
+        <div>
+          <div className="hero-script">del horno de hoy</div>
+          <h1 className="display">Hechas hoy,<br/>para vos.</h1>
+          <p className="hero-sub">Cookies estilo NY, alfajores, roles de canela y tortas. Hechos en casa, en serio. Pedí, elegí día y pasá a buscar — o te lo llevo.</p>
+          <div className="hero-ctas">
+            <button className="btn btn-primary" onClick={()=>document.getElementById('menu')?.scrollIntoView({behavior:'smooth'})}>Ver el menú <Icon n="arrow-right" s={18}/></button>
+            <button className="btn btn-ghost"><Icon n="instagram" s={18}/> @delicatebyviky</button>
+          </div>
+          <div className="hero-meta">
+            <span><Icon n="store" s={16}/> Retiro en Palermo</span>
+            <span><Icon n="bike" s={16}/> Delivery CABA</span>
+            <span><Icon n="calendar-days" s={16}/> Pedí con 48h</span>
+          </div>
+        </div>
+        <div className="hero-photo">
+          <img src="../../assets/products/cookie-ny-dulce-leche.jpg" alt=""/>
+          <img className="hero-sticker" src="../../assets/logo-sticker.svg" alt=""/>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div className="cat-row">
+        {CATS.map(c => (
+          <div key={c.id} className={'cat'+(cat===c.id?' active':'')} onClick={()=>setCat(c.id)}>{c.label}</div>
+        ))}
+      </div>
+      <div className="section-head">
+        <h2>{cat==='all' ? 'Todo lo de hoy' : CATS.find(c=>c.id===cat).label}</h2>
+        <span className="more">{products.length} {products.length===1?'producto':'productos'}</span>
+      </div>
+      <div className="grid">
+        {products.map(p => <ProductCard key={p.id} p={p} onClick={()=>onProduct(p)} onAdd={(e)=>{e.stopPropagation(); onAdd(p);}}/>)}
+      </div>
+    </section>
+
+    <section className="promo">
+      <div>
+        <h3>¿Cumple, baby shower, regalo?</h3>
+        <p>Armamos cajitas a medida. Mandame mensaje por Insta y lo coordinamos.</p>
+      </div>
+      <button className="btn btn-accent">Pedir a medida</button>
+    </section>
+  </main>);
+}
+
+function ProductCard({p, onClick, onAdd}){
+  return (
+    <article className="pcard" onClick={onClick}>
+      <div className="photo">
+        <img src={p.img} alt={p.name}/>
+        {p.badge && <span className="badge">{p.badge}</span>}
+      </div>
+      <div className="body">
+        <div className="tag">{p.tag}</div>
+        <h3>{p.name}</h3>
+        <p className="blurb">{p.blurb}</p>
+        <div className="row">
+          <div className="price">{fmt(p.price)}</div>
+          <button className="add" aria-label="Sumar" onClick={onAdd}><Icon n="plus" s={20}/></button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function PDP({product, onAdd, onBack}){
+  const [qty, setQty] = useState(1);
+  return (<main className="wrap pdp">
+    <div>
+      <div className="pdp-photo"><img src={product.img} alt={product.name}/></div>
+      <div className="thumbs">
+        <div className="th on"><img src={product.img} alt=""/></div>
+        <div className="th"><img src="../../assets/products/canasta-cookies.jpg" alt=""/></div>
+        <div className="th"><img src="../../assets/products/cajas-roles-canela.jpg" alt=""/></div>
+      </div>
+    </div>
+    <div className="pdp-info">
+      <a onClick={onBack} style={{cursor:'pointer', fontSize:14, color:'var(--fg3)', display:'inline-flex', gap:6, alignItems:'center', marginBottom:14}}><Icon n="arrow-left" s={16}/> Volver al menú</a>
+      <div className="micro">{product.tag}</div>
+      <h1>{product.name}</h1>
+      <p className="blurb">{product.blurb}</p>
+      <div className="price-row">
+        <div className="price">{fmt(product.price)}</div>
+        <div className="unit">/ unidad</div>
+      </div>
+      <div className="pdp-actions">
+        <div className="qstep">
+          <button onClick={()=>setQty(Math.max(1,qty-1))}><Icon n="minus" s={16}/></button>
+          <span>{qty}</span>
+          <button onClick={()=>setQty(qty+1)}><Icon n="plus" s={16}/></button>
+        </div>
+        <button className="btn btn-primary" onClick={()=>onAdd(product, qty)}><Icon n="shopping-bag" s={18}/> Sumar al carrito</button>
+      </div>
+      <div className="pdp-meta">
+        <div className="m"><div className="t"><Icon n="calendar-days" s={14}/> Listo en</div><div className="v">48 horas hábiles</div></div>
+        <div className="m"><div className="t"><Icon n="store" s={14}/> Retiro</div><div className="v">Palermo · sin cargo</div></div>
+        <div className="m"><div className="t"><Icon n="bike" s={14}/> Delivery</div><div className="v">CABA · $1.500</div></div>
+        <div className="m"><div className="t"><Icon n="snowflake" s={14}/> Conservación</div><div className="v">Lugar fresco · 5 días</div></div>
+      </div>
+    </div>
+  </main>);
+}
+
+function CartDrawer({open, onClose, cart, setQty, subtotal, onCheckout}){
+  return (<>
+    <div className={'scrim'+(open?' open':'')} onClick={onClose}></div>
+    <aside className={'drawer'+(open?' open':'')}>
+      <div className="drawer-head">
+        <h3>Tu cajita</h3>
+        <button className="iconbtn" onClick={onClose} aria-label="Cerrar"><Icon n="x" s={22}/></button>
+      </div>
+      <div className="drawer-body">
+        {cart.length===0 ? (
+          <div className="empty">
+            <div className="ico"><Icon n="shopping-bag" s={26}/></div>
+            <p>Tu cajita está vacía.<br/>Empezá a llenarla 🤍</p>
+          </div>
+        ) : cart.map(i => (
+          <div key={i.id} className="citem">
+            <div className="ph"><img src={i.img} alt=""/></div>
+            <div>
+              <h4>{i.name}</h4>
+              <div className="qty">
+                <button onClick={()=>setQty(i.id, i.qty-1)}><Icon n="minus" s={14}/></button>
+                <span>{i.qty}</span>
+                <button onClick={()=>setQty(i.id, i.qty+1)}><Icon n="plus" s={14}/></button>
+              </div>
+            </div>
+            <div className="price">{fmt(i.price*i.qty)}</div>
+          </div>
+        ))}
+      </div>
+      <div className="drawer-foot">
+        <div className="totals">
+          <div className="line"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
+          <div className="line"><span>Envío</span><span style={{color:'var(--fg3)'}}>se calcula al elegir</span></div>
+          <div className="line total"><span>Total</span><span>{fmt(subtotal)}</span></div>
+        </div>
+        <button className="btn btn-primary" style={{width:'100%', justifyContent:'center'}} disabled={!cart.length} onClick={onCheckout}>Ir a confirmar pedido</button>
+      </div>
+    </aside>
+  </>);
+}
+
+function Checkout({cart, subtotal, onConfirm, onBack}){
+  const [mode, setMode] = useState('retiro');
+  const ship = mode==='delivery' ? 1500 : 0;
+  return (<main className="wrap checkout">
+    <div>
+      <a onClick={onBack} style={{cursor:'pointer', fontSize:14, color:'var(--fg3)', display:'inline-flex', gap:6, alignItems:'center', marginBottom:14}}><Icon n="arrow-left" s={16}/> Seguir mirando</a>
+      <h1 style={{marginBottom: 22}}>Confirmá tu pedido</h1>
+      <section className="panel" style={{marginBottom:18}}>
+        <h3>1 · ¿Cómo lo querés recibir?</h3>
+        <div className="seg">
+          <div className={'seg-opt'+(mode==='retiro'?' on':'')} onClick={()=>setMode('retiro')}>
+            <div className="t"><Icon n="store" s={18}/> Retiro en Palermo</div>
+            <div className="s">Sin cargo · te paso la dirección por WhatsApp</div>
+          </div>
+          <div className={'seg-opt'+(mode==='delivery'?' on':'')} onClick={()=>setMode('delivery')}>
+            <div className="t"><Icon n="bike" s={18}/> Delivery CABA</div>
+            <div className="s">$1.500 · llega entre 14 y 19h</div>
+          </div>
+        </div>
+      </section>
+      <section className="panel" style={{marginBottom:18}}>
+        <h3>2 · ¿Cuándo?</h3>
+        <div className="field"><label>Día</label><input className="input" defaultValue="Viernes 8 de marzo"/></div>
+        <div className="field"><label>Franja horaria</label><input className="input" defaultValue="14h a 17h"/></div>
+      </section>
+      <section className="panel">
+        <h3>3 · Tus datos</h3>
+        <div className="field"><label>Nombre</label><input className="input" placeholder="¿Cómo te llamás?"/></div>
+        <div className="field"><label>WhatsApp</label><input className="input" placeholder="11 5555 5555"/></div>
+        {mode==='delivery' && <div className="field"><label>Dirección</label><input className="input" placeholder="Calle, altura, piso"/></div>}
+        <div className="field"><label>Mensaje en la tarjetita (opcional)</label><input className="input" placeholder="¡Feliz cumple, Sofi!"/></div>
+      </section>
+    </div>
+    <aside>
+      <div className="panel summary-card" style={{position:'sticky', top: 96}}>
+        <h3>Tu cajita</h3>
+        {cart.map(i => (
+          <div key={i.id} className="line"><span>{i.qty}× {i.name}</span><span>{fmt(i.price*i.qty)}</span></div>
+        ))}
+        <div className="line"><span style={{color:'var(--fg3)'}}>Envío</span><span>{ship?fmt(ship):'sin cargo'}</span></div>
+        <div className="line total"><span>Total</span><span>{fmt(subtotal+ship)}</span></div>
+        <button className="btn btn-primary" style={{width:'100%', justifyContent:'center', marginTop:16}} onClick={onConfirm}><Icon n="check" s={18}/> Confirmar pedido</button>
+        <p style={{fontSize:12, color:'var(--fg3)', marginTop:12, textAlign:'center'}}>Te confirmo por WhatsApp en cuanto reciba tu pedido.</p>
+      </div>
+    </aside>
+  </main>);
+}
+
+function Confirm({cart, subtotal, onHome}){
+  return (<main className="wrap confirm">
+    <div className="heart">🤍</div>
+    <h1>¡Listo, Viky ya recibió tu pedido!</h1>
+    <p className="hero-sub" style={{margin:'0 auto 8px'}}>Te escribo por WhatsApp en un ratito para confirmar todo y pasarte los datos para el pago.</p>
+    <div className="num">Pedido #DBV-{Math.floor(1000+Math.random()*9000)}</div>
+    <div className="recap">
+      <h4>Resumen</h4>
+      {cart.map(i => <div key={i.id} className="li"><span>{i.qty}× {i.name}</span><span style={{fontWeight:600}}>{fmt(i.price*i.qty)}</span></div>)}
+      <div className="li" style={{borderTop:'1px dashed var(--cream-300)', marginTop:8, paddingTop:12, fontWeight:700}}><span>Total</span><span>{fmt(subtotal)}</span></div>
+    </div>
+    <button className="btn btn-ghost" style={{marginTop:24}} onClick={onHome}><Icon n="arrow-left" s={18}/> Volver al menú</button>
+  </main>);
+}
+
+function Footer(){
+  return (<footer><div className="wrap f">
+    <div>
+      <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:14}}>
+        <img src="../../assets/logo-sticker.svg" style={{width:54, height:54}} alt=""/>
+        <div style={{fontFamily:'var(--font-script)', fontSize:30, lineHeight:1, color:'#fff'}}>delicate</div>
+      </div>
+      <p>Pastelería artesanal en Palermo, Buenos Aires.<br/>Cookies, alfajores, roles y tortas — hechas hoy, para vos.</p>
+    </div>
+    <div>
+      <h5>Pedidos</h5>
+      <p><a>Cómo pedir</a><br/><a>Tortas a medida</a><br/><a>Empresas</a></p>
+    </div>
+    <div>
+      <h5>Hablamos</h5>
+      <p><a>Instagram @delicatebyviky</a><br/><a>WhatsApp</a><br/><a>viky@delicate.com.ar</a></p>
+    </div>
+  </div>
+  <div className="wrap signoff"><span>© Delicate by Viky · 2026</span><span>Hecho con 🤍 en CABA</span></div>
+  </footer>);
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

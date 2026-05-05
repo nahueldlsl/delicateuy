@@ -1,0 +1,67 @@
+// Delicate by Viky — Prisma Schema
+// PostgreSQL via Docker Compose
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  category    String   // cookies, roles, alfajores, tortas, cajas
+  tag         String?  // Script accent text, e.g. "del horno de hoy"
+  description String
+  price       Int      // Price in UYU (pesos uruguayos), e.g. 110
+  unitLabel   String?  // e.g. "6 unidades" for rolls
+  image       String   // Relative path: /products/cookie-ny-dulce-leche.jpg
+  badge       String?  // "Top", "Nuevo", "Edición", etc.
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([active])
+}
+
+enum DeliveryMethod {
+  PICKUP
+  DELIVERY
+}
+
+enum PaymentMethod {
+  CASH
+  ONLINE
+}
+
+enum OrderStatus {
+  RECEIVED
+  PREPARING
+  READY
+  DELIVERED
+}
+
+model Order {
+  id             String         @id @default(cuid())
+  orderNumber    String         @unique // DBV-XXXX format
+  customerName   String
+  whatsapp       String
+  deliveryMethod DeliveryMethod
+  paymentMethod  PaymentMethod
+  address        String?        // Required only for DELIVERY
+  cardMessage    String?        // Optional gift card message
+  items          Json           // Array of { productId, name, price, qty, image }
+  subtotal       Int
+  shippingCost   Int            @default(0)
+  total          Int
+  status         OrderStatus    @default(RECEIVED)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}

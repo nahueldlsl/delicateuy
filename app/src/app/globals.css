@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/* =========================================================
+   Delicate by Viky — Design Tokens (Tailwind v4 @theme)
+   Mapped from colors_and_type.css
+   ========================================================= */
+
+@theme inline {
+  /* ── Brand Palette ── */
+  --color-choc-900: #2A1810;
+  --color-choc-800: #3D2418;
+  --color-choc-700: #5A3826;
+  --color-choc-600: #7A4F33;
+  --color-choc-500: #9B6A47;
+
+  --color-dulce-700: #A66A3A;
+  --color-dulce-600: #C58453;
+  --color-dulce-500: #D9A574;
+  --color-dulce-400: #E6BF95;
+
+  --color-cream-50: #FDFAF5;
+  --color-cream-100: #FBF6F0;
+  --color-cream-200: #F5EDE2;
+  --color-cream-300: #EADBC5;
+  --color-cream-400: #D9C4A6;
+
+  --color-lila-50: #F8F2FB;
+  --color-lila-100: #F0E4F6;
+  --color-lila-200: #E5D2F0;
+  --color-lila-300: #C9A8E6;
+  --color-lila-400: #A988CC;
+  --color-lila-500: #8B6BAE;
+  --color-lila-600: #6F5290;
+
+  --color-rosa-100: #FBE8EE;
+  --color-rosa-300: #F4B7C9;
+  --color-rosa-500: #E07A99;
+
+  --color-spr-blue: #A8D2EC;
+  --color-spr-yellow: #F4D58D;
+  --color-spr-pink: #F4B7C9;
+
+  --color-success: #6F8F5C;
+  --color-warning: #D8A24A;
+  --color-danger: #C5503E;
+
+  /* ── Fonts ── */
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-body: "Nunito", "Poppins", system-ui, -apple-system, sans-serif;
+  --font-script: "Caveat", "Pacifico", "Brush Script MT", cursive;
+
+  /* ── Radii ── */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-pill: 999px;
+
+  /* ── Shadows (warm-tinted) ── */
+  --shadow-xs: 0 1px 2px rgba(90, 56, 38, 0.06);
+  --shadow-sm: 0 2px 6px rgba(90, 56, 38, 0.08);
+  --shadow-md: 0 6px 18px rgba(90, 56, 38, 0.10);
+  --shadow-lg: 0 14px 32px rgba(90, 56, 38, 0.14);
+  --shadow-xl: 0 24px 60px rgba(90, 56, 38, 0.18);
+}
+
+/* =========================================================
+   Google Fonts — loaded via <link> in layout.js or here
+   ========================================================= */
+
+/* =========================================================
+   CSS Custom Properties — semantic tokens
+   ========================================================= */
+:root {
+  /* Surfaces */
+  --bg: #FDFAF5;
+  --bg-elevated: #FFFFFF;
+  --bg-muted: #FBF6F0;
+  --bg-inset: #F5EDE2;
+  --bg-accent: #F8F2FB;
+
+  /* Foreground (text) */
+  --fg1: #2A1810;
+  --fg2: #5A3826;
+  --fg3: #9B6A47;
+  --fg4: #B5947A;
+  --fg-on-dark: #FDFAF5;
+  --fg-on-lila: #FFFFFF;
+  --fg-link: #8B6BAE;
+
+  /* Borders */
+  --border-subtle: #EADBC5;
+  --border-default: #E0CFB6;
+  --border-strong: #9B6A47;
+
+  /* Brand semantic */
+  --brand: #A988CC;
+  --brand-hover: #8B6BAE;
+  --brand-press: #6F5290;
+  --brand-soft: #F0E4F6;
+  --on-brand: #FFFFFF;
+
+  --accent: #C58453;
+  --accent-hover: #A66A3A;
+  --accent-soft: #F5EDE2;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 360ms;
+  --dur-4: 600ms;
+}
+
+/* =========================================================
+   Base typography — from Design System
+   ========================================================= */
+html, body {
+  background: var(--bg);
+  color: var(--fg1);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Heading overrides to use brand fonts */
+h1, .t-h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--fg1);
+}
+
+h2, .t-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--fg1);
+}
+
+h3, .t-h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fg1);
+}
+
+p {
+  color: var(--fg2);
+}
+
+a {
+  color: var(--fg-link);
+  text-decoration: none;
+  transition: color 120ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+a:hover {
+  color: #6F5290;
+}
+
+/* =========================================================
+   Utility classes for Design System
+   ========================================================= */
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--fg1);
+}
+
+.t-script {
+  font-family: var(--font-script);
+  font-weight: 600;
+  color: #8B6BAE;
+}
+
+.t-price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-feature-settings: "tnum";
+  color: var(--fg1);
+}
+
+.t-micro {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--fg3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* =========================================================
+   Scrollbar styling
+   ========================================================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 999px;
+}

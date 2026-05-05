@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<title>Colors — Cream & accents</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 20px; background: var(--cream-50); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .swatch { height: 88px; border-radius: var(--r-md); display: flex; flex-direction: column; justify-content: flex-end; padding: 8px 10px; box-shadow: var(--shadow-xs); }
+  .swatch .name { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .swatch .hex { font-family: var(--font-body); font-size: 11px; opacity: 0.85; font-feature-settings: "tnum"; }
+  .label-dark .name, .label-dark .hex { color: var(--cream-50); }
+  .label-light .name, .label-light .hex { color: var(--choc-900); }
+  h4 { font-family: var(--font-body); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg3); margin: 0 0 8px; font-weight: 700; }
+  .row { margin-bottom: 12px; }
+</style></head><body>
+<div class="row"><h4>Cream / dough — neutrals</h4>
+<div class="grid">
+  <div class="swatch label-light" style="background:#FDFAF5;border:1px solid #EADBC5"><div class="name">cream 50</div><div class="hex">#FDFAF5</div></div>
+  <div class="swatch label-light" style="background:#FBF6F0"><div class="name">cream 100</div><div class="hex">#FBF6F0</div></div>
+  <div class="swatch label-light" style="background:#F5EDE2"><div class="name">cream 200</div><div class="hex">#F5EDE2</div></div>
+  <div class="swatch label-light" style="background:#EADBC5"><div class="name">cream 300</div><div class="hex">#EADBC5</div></div>
+  <div class="swatch label-light" style="background:#D9C4A6"><div class="name">cream 400</div><div class="hex">#D9C4A6</div></div>
+</div></div>
+<div class="row"><h4>Lila (sticker) · Rosa</h4>
+<div class="grid">
+  <div class="swatch label-light" style="background:#F0E4F6"><div class="name">lila 100</div><div class="hex">#F0E4F6</div></div>
+  <div class="swatch label-light" style="background:#C9A8E6"><div class="name">lila 300</div><div class="hex">#C9A8E6</div></div>
+  <div class="swatch label-dark" style="background:#A988CC"><div class="name">lila 400 ★</div><div class="hex">#A988CC</div></div>
+  <div class="swatch label-dark" style="background:#8B6BAE"><div class="name">lila 500</div><div class="hex">#8B6BAE</div></div>
+  <div class="swatch label-light" style="background:#F4B7C9"><div class="name">rosa 300</div><div class="hex">#F4B7C9</div></div>
+</div></div>
+</body></html>

@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: delicate_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: delicate
+      POSTGRES_PASSWORD: delicate_secret_2026
+      POSTGRES_DB: delicate_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - delicate_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U delicate -d delicate_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  delicate_pgdata:

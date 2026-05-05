@@ -1,0 +1,253 @@
+/* =========================================================
+   Delicate by Viky — Color & Type Foundations
+   Palette extracted directly from product photography:
+   chocolate / dulce de leche / cream + lilac sticker accent.
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Nunito:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&display=swap");
+
+:root {
+  /* ---------- Brand palette (raw tokens) ---------- */
+
+  /* Chocolate / cocoa — the deepest darks come from baked cookies */
+  --choc-900: #2A1810;     /* near-black chocolate, used for body text */
+  --choc-800: #3D2418;
+  --choc-700: #5A3826;     /* warm chocolate */
+  --choc-600: #7A4F33;
+  --choc-500: #9B6A47;     /* milk chocolate */
+
+  /* Dulce de leche / caramel — the signature filling */
+  --dulce-700: #A66A3A;
+  --dulce-600: #C58453;    /* primary dulce */
+  --dulce-500: #D9A574;
+  --dulce-400: #E6BF95;
+
+  /* Cream / butter / dough — light neutrals from cookie crumb */
+  --cream-50:  #FDFAF5;    /* page background, lightest */
+  --cream-100: #FBF6F0;    /* card background */
+  --cream-200: #F5EDE2;    /* subtle surface */
+  --cream-300: #EADBC5;    /* border on cream */
+  --cream-400: #D9C4A6;    /* muted accent */
+
+  /* Lilac / lavender — the sticker color, brand accent #1 */
+  --lila-50:  #F8F2FB;
+  --lila-100: #F0E4F6;
+  --lila-200: #E5D2F0;     /* vichy / gingham tile */
+  --lila-300: #C9A8E6;     /* primary lila */
+  --lila-400: #A988CC;     /* sticker base */
+  --lila-500: #8B6BAE;
+  --lila-600: #6F5290;
+
+  /* Rosa / pink — accent #2 from sprinkles & valentine cookies */
+  --rosa-100: #FBE8EE;
+  --rosa-300: #F4B7C9;     /* primary rosa */
+  --rosa-500: #E07A99;
+
+  /* Sprinkle accents (used sparingly) */
+  --spr-blue:   #A8D2EC;
+  --spr-yellow: #F4D58D;
+  --spr-pink:   #F4B7C9;
+  --spr-lila:   #C9A8E6;
+  --spr-white:  #FFFFFF;
+
+  /* Functional */
+  --success: #6F8F5C;     /* matcha-leaning olive, stays warm */
+  --warning: #D8A24A;
+  --danger:  #C5503E;     /* warm brick, not pure red */
+
+  /* ---------- Semantic surfaces ---------- */
+  --bg:           var(--cream-50);
+  --bg-elevated:  #FFFFFF;
+  --bg-muted:     var(--cream-100);
+  --bg-inset:     var(--cream-200);
+  --bg-accent:    var(--lila-50);
+
+  /* ---------- Foreground (text) ---------- */
+  --fg1: var(--choc-900);     /* primary text */
+  --fg2: var(--choc-700);     /* secondary text */
+  --fg3: var(--choc-500);     /* muted / metadata */
+  --fg4: #B5947A;             /* placeholder, disabled */
+  --fg-on-dark: var(--cream-50);
+  --fg-on-lila: #FFFFFF;
+  --fg-link:    var(--lila-500);
+
+  /* ---------- Borders ---------- */
+  --border-subtle: var(--cream-300);
+  --border-default: #E0CFB6;
+  --border-strong: var(--choc-500);
+
+  /* ---------- Brand semantic ---------- */
+  --brand:           var(--lila-400);   /* sticker lilac */
+  --brand-hover:     var(--lila-500);
+  --brand-press:     var(--lila-600);
+  --brand-soft:      var(--lila-100);
+  --on-brand:        #FFFFFF;
+
+  --accent:          var(--dulce-600);  /* warm caramel CTA */
+  --accent-hover:    var(--dulce-700);
+  --accent-soft:     var(--cream-200);
+
+  /* ---------- Radii ---------- */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 36px;
+  --r-pill: 999px;
+
+  /* ---------- Shadows — soft, warm-tinted ---------- */
+  --shadow-xs: 0 1px 2px rgba(90, 56, 38, 0.06);
+  --shadow-sm: 0 2px 6px rgba(90, 56, 38, 0.08);
+  --shadow-md: 0 6px 18px rgba(90, 56, 38, 0.10);
+  --shadow-lg: 0 14px 32px rgba(90, 56, 38, 0.14);
+  --shadow-xl: 0 24px 60px rgba(90, 56, 38, 0.18);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* ---------- Spacing scale (4px grid) ---------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+
+  /* ---------- Type families ---------- */
+  /* Display: warm modern serif (Fraunces) — used sparingly for hero / product names */
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  /* Body: rounded humanist sans — primary UI font */
+  --font-body: "Nunito", "Poppins", system-ui, -apple-system, sans-serif;
+  /* Script: handwritten accent — chalkboard signs, "fresh today" labels */
+  --font-script: "Caveat", "Pacifico", "Brush Script MT", cursive;
+
+  /* ---------- Type sizes (clamp-based, mobile-first) ---------- */
+  --t-display:  clamp(40px, 6vw, 72px);
+  --t-h1:       clamp(32px, 4.5vw, 48px);
+  --t-h2:       clamp(26px, 3.2vw, 36px);
+  --t-h3:       22px;
+  --t-h4:       18px;
+  --t-body:     16px;
+  --t-body-sm:  14px;
+  --t-caption:  13px;
+  --t-micro:    11px;
+
+  /* Line heights */
+  --lh-tight: 1.05;
+  --lh-snug:  1.2;
+  --lh-base:  1.5;
+  --lh-loose: 1.7;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 360ms;
+  --dur-4: 600ms;
+}
+
+/* =========================================================
+   Semantic typography classes — drop these on elements
+   ========================================================= */
+
+html, body {
+  background: var(--bg);
+  color: var(--fg1);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+.t-display, h1.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 144;
+  color: var(--fg1);
+}
+
+h1, .t-h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+  color: var(--fg1);
+  font-variation-settings: "opsz" 96;
+}
+
+h2, .t-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--fg1);
+}
+
+h3, .t-h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+}
+
+h4, .t-h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-h4);
+  line-height: var(--lh-snug);
+  color: var(--fg1);
+}
+
+p, .t-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--t-body);
+  line-height: var(--lh-base);
+  color: var(--fg2);
+  text-wrap: pretty;
+}
+
+.t-body-sm { font-size: var(--t-body-sm); line-height: var(--lh-base); }
+
+.t-caption {
+  font-size: var(--t-caption);
+  line-height: var(--lh-base);
+  color: var(--fg3);
+}
+
+.t-micro {
+  font-size: var(--t-micro);
+  line-height: 1.4;
+  color: var(--fg3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.t-script {
+  font-family: var(--font-script);
+  font-weight: 600;
+  color: var(--lila-500);
+}
+
+.t-price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-feature-settings: "tnum";
+  color: var(--fg1);
+}
+
+a { color: var(--fg-link); text-decoration: none; transition: color var(--dur-1) var(--ease-out); }
+a:hover { color: var(--lila-600); text-decoration: underline; text-underline-offset: 3px; }

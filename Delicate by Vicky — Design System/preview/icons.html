@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<title>Iconography</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { margin: 0; padding: 24px; background: var(--cream-50); font-family: var(--font-body); }
+  .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 14px 8px; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .ico { width: 40px; height: 40px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-xs); color: var(--fg2); }
+  .name { font-size: 10px; color: var(--fg3); }
+  h4 { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg3); margin: 0 0 10px; font-weight: 700; }
+</style></head><body>
+<h4>Lucide · stroke 1.75 · 22px</h4>
+<div class="grid">
+  <div class="item"><div class="ico"><i data-lucide="shopping-bag"></i></div><div class="name">bag</div></div>
+  <div class="item"><div class="ico"><i data-lucide="user-round"></i></div><div class="name">user</div></div>
+  <div class="item"><div class="ico"><i data-lucide="search"></i></div><div class="name">search</div></div>
+  <div class="item"><div class="ico"><i data-lucide="store"></i></div><div class="name">retiro</div></div>
+  <div class="item"><div class="ico"><i data-lucide="bike"></i></div><div class="name">delivery</div></div>
+  <div class="item"><div class="ico"><i data-lucide="heart"></i></div><div class="name">heart</div></div>
+  <div class="item"><div class="ico"><i data-lucide="calendar-days"></i></div><div class="name">calendar</div></div>
+  <div class="item"><div class="ico"><i data-lucide="map-pin"></i></div><div class="name">address</div></div>
+  <div class="item"><div class="ico"><i data-lucide="phone"></i></div><div class="name">phone</div></div>
+  <div class="item"><div class="ico"><i data-lucide="plus"></i></div><div class="name">plus</div></div>
+  <div class="item"><div class="ico"><i data-lucide="minus"></i></div><div class="name">minus</div></div>
+  <div class="item"><div class="ico"><i data-lucide="check-circle-2"></i></div><div class="name">done</div></div>
+  <div class="item"><div class="ico"><i data-lucide="circle-dashed"></i></div><div class="name">pending</div></div>
+  <div class="item"><div class="ico"><i data-lucide="circle-dot"></i></div><div class="name">active</div></div>
+  <div class="item"><div class="ico"><i data-lucide="cake"></i></div><div class="name">cake</div></div>
+  <div class="item"><div class="ico"><i data-lucide="cookie"></i></div><div class="name">cookie</div></div>
+</div>
+<script>lucide.createIcons({attrs:{"stroke-width":1.75}});</script>
+</body></html>

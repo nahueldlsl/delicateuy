@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<title>Inputs</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 24px; background: var(--cream-50); font-family: var(--font-body); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: block; font-size: 12px; font-weight: 700; color: var(--fg2); margin-bottom: 6px; letter-spacing: 0.02em; }
+  input, select { width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; color: var(--fg1); background: var(--cream-100); border: none; border-radius: 14px; padding: 12px 16px; outline: none; transition: box-shadow var(--dur-2) var(--ease-out); }
+  input:focus { box-shadow: 0 0 0 2px var(--cream-50), 0 0 0 4px var(--lila-300); }
+  input::placeholder { color: var(--fg4); }
+  .help { font-size: 12px; color: var(--fg3); margin-top: 6px; }
+  .err { color: var(--danger); margin-top: 6px; font-size: 12px; }
+  .err-input { box-shadow: 0 0 0 1.5px var(--danger); background: #FFF7F5; }
+</style></head><body>
+<div>
+  <label>Tu nombre</label>
+  <input placeholder="¿Cómo te llamás?"/>
+  <div class="help">Lo usamos para la etiqueta de la cajita.</div>
+</div>
+<div>
+  <label>Día de retiro</label>
+  <input value="Viernes 8 de marzo"/>
+</div>
+<div>
+  <label>WhatsApp</label>
+  <input value="11 5" class="err-input"/>
+  <div class="err">Necesitamos el número completo</div>
+</div>
+<div>
+  <label>Mensaje en la tarjetita</label>
+  <input placeholder="Opcional"/>
+</div>
+</body></html>
