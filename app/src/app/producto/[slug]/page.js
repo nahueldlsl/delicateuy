@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { products } from "@/data/products";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import AddToCartButton from "@/components/AddToCartButton";
@@ -7,9 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://delicate.com.uy";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({
-    where: { slug },
-  });
+  const product = products.find((p) => p.slug === slug);
 
   if (!product) return { title: "Producto no encontrado" };
 
@@ -46,17 +44,13 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductPage({ params }) {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({
-    where: { slug },
-  });
+  const product = products.find((p) => p.slug === slug);
 
   if (!product) notFound();
 
-  // Pre-serialize product for Client Component
+  // Serialized product (no need for ISO strings since static data doesn't have dates)
   const serializedProduct = {
     ...product,
-    createdAt: product.createdAt.toISOString(),
-    updatedAt: product.updatedAt.toISOString(),
   };
 
   const productJsonLd = {

@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 
 function generateOrderNumber() {
   const num = Math.floor(1000 + Math.random() * 9000);
@@ -65,41 +64,14 @@ export async function POST(request) {
     const total = subtotal + shippingCost;
 
     // ── Generate unique order number ──
-    let orderNumber = generateOrderNumber();
-    // Ensure uniqueness (unlikely collision, but safe)
-    let attempts = 0;
-    while (attempts < 10) {
-      const existing = await prisma.order.findUnique({
-        where: { orderNumber },
-      });
-      if (!existing) break;
-      orderNumber = generateOrderNumber();
-      attempts++;
-    }
+    const orderNumber = generateOrderNumber();
 
-    // ── Create order ──
-    const order = await prisma.order.create({
-      data: {
-        orderNumber,
-        customerName,
-        whatsapp,
-        deliveryMethod,
-        paymentMethod,
-        address: address || null,
-        cardMessage: cardMessage || null,
-        items,
-        subtotal,
-        shippingCost,
-        total,
-        status: "RECEIVED",
-      },
-    });
-
+    // ── Mock response (No DB) ──
     return NextResponse.json({
       success: true,
-      orderNumber: order.orderNumber,
-      total: order.total,
-      items: order.items,
+      orderNumber,
+      total,
+      items,
     });
   } catch (error) {
     console.error("Error creating order:", error);
