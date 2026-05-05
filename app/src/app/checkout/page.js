@@ -118,7 +118,7 @@ export default function CheckoutPage() {
   };
 
   const generateWhatsAppLink = (order) => {
-    const phone = "59899381544"; // Viky's phone number
+    const phone = "59897984080"; // Viky's phone number
     const itemsText = order.items
       .map((i) => `• ${i.qty}x ${i.name} (${fmt(i.price * i.qty)})`)
       .join("\n");
