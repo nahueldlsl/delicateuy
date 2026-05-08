@@ -71,7 +71,7 @@ export default function HeroSection() {
         >
           <div className="aspect-[4/5] rounded-[36px] overflow-hidden shadow-lg bg-cream-200 relative">
             <Image
-              src="/products/cookie-ny-dulce-leche.jpg"
+              src="/products/canasta-cookies-nutella.jpg"
               alt="Cookie estilo NY rellena de dulce de leche"
               fill
               priority
